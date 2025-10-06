@@ -1,0 +1,38 @@
+trigger:
+  - none
+
+pool:
+  name: Default
+
+parameters:
+ - name: 'Environment Type'
+   type: string
+   values: 
+    - 'dev'
+    - 'test'
+    - 'Prod'
+   default: 'dev' 
+
+
+ - name: 'creater'
+   type: string
+   default: 'kamran' 
+
+variables:
+  - group: workshop-vg
+  - group: individual-vg
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(serviceconnection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "Validating Bicep template..."
+      az bicep build --file infra/resourcegroup.bicep
+      az deployment sub create \
+        --location australiasoutheast \
+        --template-file infra/resourcegroup.bicep \
+        --parameters resourceGroupName=$(resourceGroupName)   
+        echo "Subscription scope delpoyment completed"
