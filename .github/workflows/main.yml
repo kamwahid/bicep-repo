@@ -19,6 +19,9 @@ jobs:
 
     - name: Deploy Bicep file
       run: |
-        az deployment sub create \
-          --location australiasoutheast \
-          --template-file ./infra/resourcegroup.bicep
+
+        az deployment group create \
+          --resource-group Test_Kamran_RG1 \
+          --template-file ./infra/multivm-1.bicep \
+          --parameters ./infra/multivm-1.bicepparam
+
