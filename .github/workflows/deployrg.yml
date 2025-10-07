@@ -3,7 +3,7 @@ name: Deploy RG to Azure
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-latest
