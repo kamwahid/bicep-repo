@@ -22,4 +22,5 @@ jobs:
       run: |
 
         az deployment sub create \
+          --location australiasoutheast \
           --template-file ./infra/resourcegroup.bicep
