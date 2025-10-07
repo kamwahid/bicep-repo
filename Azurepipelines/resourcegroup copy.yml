@@ -1,38 +1,27 @@
-trigger:
-  - none
+name: Deploy Bicep to Azure
 
-pool:
-  name: Default
+on:
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
-parameters:
- - name: 'Environment Type'
-   type: string
-   values: 
-    - 'dev'
-    - 'test'
-    - 'Prod'
-   default: 'dev' 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
- - name: 'creater'
-   type: string
-   default: 'kamran' 
+    - name: Log in to Azure using service principal
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
-variables:
-  - group: workshop-vg
-  - group: individual-vg
+    - name: Deploy Bicep file
+      run: |
+        az deployment sub create \
+          --location australiasoutheast \
+          --template-file ./resourcegroup.bicep
 
-steps:
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: $(serviceconnection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      echo "Validating Bicep template..."
-      az bicep build --file infra/resourcegroup.bicep
-      az deployment sub create \
-        --location australiasoutheast \
-        --template-file infra/resourcegroup.bicep \
-        --parameters resourceGroupName=$(resourceGroupName)   
-        echo "Subscription scope delpoyment completed"
