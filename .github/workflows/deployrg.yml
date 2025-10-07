@@ -1,0 +1,25 @@
+name: Deploy RG to Azure
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Azure using service principal
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        auth-type: SERVICE_PRINCIPAL
+
+    - name: Deploy Bicep file
+      run: |
+
+        az deployment group create \
+          --template-file ./infra/resourcegroup.bicep
