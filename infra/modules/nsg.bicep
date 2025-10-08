@@ -21,3 +21,4 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-0
     ]
   }
 }
+output nsgId string = networkSecurityGroup.id
