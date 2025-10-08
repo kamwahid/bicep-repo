@@ -1,7 +1,7 @@
 
 param vnetName string = 'kamranvnet1'
 param location string = 'australiasoutheast'
-param nsgId string
+param nsgId string 
 
 
 

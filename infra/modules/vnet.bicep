@@ -1,6 +1,7 @@
 param vnetName string 
 param location string 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
+param nsgId string 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-05-01' = {
   name: vnetName
   location: location
   properties: {
@@ -14,6 +15,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
         name: 'Subnet-1'
         properties: {
           addressPrefix: '10.0.0.0/24'
+          networkSecurityGroup: {
+            id: nsgId
+          }
         }
       }
       {
@@ -27,3 +31,4 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
 }
 
 output virtualNetworkId string = virtualNetwork.id
+output subnetId string  = '${virtualNetwork.id}/subnets/Subnet-1'
