@@ -1,7 +1,6 @@
 
 param vnetName string = 'kamranvnet1'
 param location string = 'australiasoutheast'
-param nsgId string 
 
 
 
@@ -16,7 +15,7 @@ module vnetMod './modules/vnet.bicep' ={
  params:{
   vnetName: vnetName
   location: location
-  nsgId: nsgId
+  nsgId: nsgMod.outputs.nsgId
  }
 }
 
