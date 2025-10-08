@@ -1,5 +1,5 @@
-param vnetName string = 'kamranvnet1'
-param location string = 'australiasoutheast'
+param vnetName string 
+param location string 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: vnetName
   location: location
