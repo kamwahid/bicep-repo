@@ -3,7 +3,7 @@ param vnetName string = 'kamranvnet1'
 param location string = 'australiasoutheast'
 @secure()
 param adminPassword string
-
+param adminUsername string = 'azureuser'
 
 
 module nsgMod 'modules/nsg.bicep' ={
@@ -30,8 +30,8 @@ resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
     }
     osProfile: {
       computerName: 'VM1'
-      adminUsername: adminPassword
-      adminPassword: 'Kamran@1234'
+      adminUsername: adminUsername
+      adminPassword: adminPassword
     }
     storageProfile: {
       imageReference: {
