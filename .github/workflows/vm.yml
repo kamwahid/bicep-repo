@@ -1,4 +1,4 @@
-name: Deploy Bicep to Azure
+name: Deploy VM to Azure
 
 on:
   workflow_dispatch:  # Allows manual trigger from GitHub UI
@@ -22,4 +22,5 @@ jobs:
 
         az deployment group create \
           --resource-group myrgkamran \
-          --template-file ./infra/vm.bicep
+          --template-file ./infra/vm.bicep \
+          --parameters adminpassword='Kamran@1234'
