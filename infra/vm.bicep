@@ -1,6 +1,8 @@
 
 param vnetName string = 'kamranvnet1'
 param location string = 'australiasoutheast'
+@secure()
+param adminPassword string
 
 
 
@@ -28,7 +30,7 @@ resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
     }
     osProfile: {
       computerName: 'VM1'
-      adminUsername: 'kamran'
+      adminUsername: adminPassword
       adminPassword: 'Kamran@1234'
     }
     storageProfile: {

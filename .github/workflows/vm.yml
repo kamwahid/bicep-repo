@@ -23,4 +23,4 @@ jobs:
         az deployment group create \
           --resource-group myrgkamran \
           --template-file ./infra/vm.bicep \
-          --parameters adminpassword='Kamran@1234'
+          --parameters ./infra/vm.bicepparam
