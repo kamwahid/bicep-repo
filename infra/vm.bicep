@@ -1,6 +1,6 @@
 
-param vnetName string = 'kamranvnet1'
-param location string = 'australiasoutheast'
+param vnetName string
+param location string 
 @secure()
 param adminPassword string
 param adminUsername string = 'azureuser'
