@@ -35,9 +35,6 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-11-01' = {
         }
       }
     ]
-    networkSecurityGroup: {
-      id: nsgMod.outputs.nsgId
-    }
   }
 }
 
