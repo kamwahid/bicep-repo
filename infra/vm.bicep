@@ -20,6 +20,26 @@ module vnetMod './modules/vnet.bicep' ={
   nsgId: nsgMod.outputs.nsgId
  }
 }
+resource nic 'Microsoft.Network/networkInterfaces@2020-11-01' = {
+  name: 'vm1-nic'
+  location: location
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        properties: {
+          subnet: {
+            id: '${vnetMod.outputs.virtualNetworkId}/subnets/subnet-1'
+          }
+          privateIPAllocationMethod: 'Dynamic'
+        }
+      }
+    ]
+    networkSecurityGroup: {
+      id: nsgMod.outputs.nsgId
+    }
+  }
+}
 
 resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
   name: 'VM1'
@@ -49,7 +69,7 @@ resource windowsVM 'Microsoft.Compute/virtualMachines@2020-12-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: 'id'
+          id: nic.id
         }
       ]
     }
